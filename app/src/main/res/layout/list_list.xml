@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:text="codeblad 2523"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:id="@+id/listName"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="?attr/colorPrimary"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
+        <TextView
+            android:text="125 Tokens"
+            android:layout_below="@id/listName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:id="@+id/tokenAmount"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:srcCompat="@drawable/logo"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="29dp"
+        android:layout_marginEnd="29dp"
+        android:id="@+id/preferred" />
+</RelativeLayout>

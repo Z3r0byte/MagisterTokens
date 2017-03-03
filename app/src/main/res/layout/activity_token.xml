@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,40 +7,63 @@
     android:fitsSystemWindows="true"
     tools:context="eu.z3r0byteapps.magistertokens.TokenActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+
+    <RelativeLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="160dp"
+        android:background="@color/primary">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/primary"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_height="wrap_content"
+            app:theme="@style/ToolBarStyle" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <EditText
+            android:layout_margin="16dp"
+            android:hint="@string/msg_code_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_field"
+            android:textColor="@color/md_white_1000"
+            android:layout_alignParentBottom="true"
+            android:singleLine="true"
+            android:inputType="number"
+            android:selectAllOnFocus="true" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+    </RelativeLayout>
 
-    <include layout="@layout/content_token" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+    <ListView
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tokenList" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <RelativeLayout
+        android:layout_below="@id/toolbarLayout"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/no_results_layout">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_results_icon"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/no_results_icon"
+            android:text="@string/msg_no_results" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

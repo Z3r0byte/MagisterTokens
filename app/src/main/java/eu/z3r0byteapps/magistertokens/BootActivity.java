@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import eu.z3r0byteapps.magistertokens.Util.ConfigUtil;
+import eu.z3r0byteapps.magistertokens.Util.ListDatabase;
 
 public class BootActivity extends AppCompatActivity {
 
@@ -27,13 +28,24 @@ public class BootActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boot);
+        ListDatabase listDatabase = new ListDatabase(this);
 
         ConfigUtil configUtil = new ConfigUtil(this);
-
-        if (configUtil.getInteger("amountOfLists", 0) < 1) {
+        if (configUtil.getBoolean("first_start", true)) {
+            configUtil.setBoolean("first_start", false);
             startActivity(new Intent(this, ManageListsActivity.class));
+            finish();
+        }
+
+        if (listDatabase.getAmountOfLists() < 1 || listDatabase.getPreferredList() == null) {
+            startActivity(new Intent(this, ManageListsActivity.class));
+            finish();
         } else {
-            //start favorite list activity
+            String listName = listDatabase.getPreferredList();
+            Intent intent = new Intent(this, TokenActivity.class);
+            intent.putExtra("listName", listName);
+            startActivity(intent);
+            finish();
         }
 
     }

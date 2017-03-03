@@ -16,4 +16,47 @@
 <resources>
     <string name="app_name">Magister Tokens</string>
     <string name="title_activity_manage_lists">ManageListsActivity</string>
+    <string name="msg_no_lists_found">Geen lijsten gevonden</string>
+    <string name="msg_import_list">Lijst importeren</string>
+    <string name="msg_import_list_clarification">Je kunt een lijst met codes importeren via een .csv bestand. Gebruik als veldscheidingsteken een \';\', \':\' of \',\'. Op dit moment worden er nog geen andere bestandstypes ondersteund.</string>
+    <string name="btn_import_list">Bestand importeren</string>
+    <string name="msg_cancel">Annuleren</string>
+    <string name="err_oops">Oeps…</string>
+    <string name="msg_okay">Oké</string>
+    <string name="err_retrieving_file">Er ging iets mis tijdens het ophalen van het bestand. Plaats het document in de hoofdmap van de sd-kaart en probeer het opnieuw.</string>
+    <string name="err_unable_to_read_lines">Onderstaande regels konden niet worden gelezen, controleer of u het juiste formaat gebruikt.\n</string>
+    <string name="msg_success">Gelukt!</string>
+    <string name="msg_successfully_read_file">Het bestand is succesvol ingeladen.</string>
+    <string name="msg_insert_name">Voer een naam in.</string>
+    <string name="msg_insert_name_for_list">Voer een naam voor deze lijst in:</string>
+    <string name="err_list_exsists">Er bestaat al een lijst met deze naam.</string>
+    <string name="err_something_went_wrong">Er ging iets mis: \n</string>
+    <string name="msg_successfully_imported_list">Lijst succesvol geïmporteerd.</string>
+    <string name="msg_allow_read_storage_please">Geef aub toestemming om de opslag te lezen.</string>
+    <string name="title_activity_token">TokenActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="msg_amount_of_tokens">" tokens"</string>
+    <string name="msg_code_number">codenummer</string>
+    <string name="msg_no_results">Geen resultaten</string>
+    <string name="msg_app_title">Magister Tokens</string>
+    <string name="msg_trial_left">Trial: %1$d dagen resterend</string>
+    <string name="msg_premium">Premium</string>
+    <string name="msg_manage_lists">Lijsten beheren</string>
+    <string name="msg_token_amount_formattable">%1$d tokens</string>
+    <string name="msg_delete_list_title">Lijst verwijderen?</string>
+    <string name="msg_yes">Ja</string>
+    <string name="msg_list_deleted">Lijst verwijderd</string>
+    <string name="msg_delete_list_body">Weet je zeker dat je de lijst %1$s wilt verwijderen?</string>
+    <string name="menu_help">Help</string>
+    <string name="msg_help_title">Help Magister Tokens</string>
+    <string name="msg_help_body"><![CDATA[In dit scherm kun je je codelijsten bekijken, hieronder staan de dingen die je kunt doen:<br/><br/><b>Blauwe knop (rechtsonder):</b> met deze knop kun je lijsten toevoegen.<br/><br/><b>Kort op een lijst klikken:</b> als je dit doet, wordt de lijst als favoriet ingesteld, dit wil zeggen dat de app met die lijst opstart.<br/><br/><b>Lang drukken op een lijst:</b> door lang te klikken kun je de lijst verwijderen, geen zorgen, er wordt eerst gevraagd of je het zeker weet voordat er iets wordt verijderd.<br/><br/>Nog vragen? Stuur even een mailtje naar z3r0byte.apps@gmail.com]]></string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="msg_settings">Instellingen</string>
+
+    <string name="msg_license">Licentie</string>
+    <string name="msg_security">Beveiliging</string>
+    <string name="msg_about">Over</string>
+    <string name="status">Status:</string>
+    <string name="trial_days_left">Trial: %1$d dagen over</string>
 </resources>
