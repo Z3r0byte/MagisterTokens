@@ -43,6 +43,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
@@ -70,6 +71,7 @@ public class ManageListsActivity extends AppCompatActivity {
 
     Context context = this;
     ConfigUtil configUtil;
+    MaterialDialog progressDialog;
 
     ListAdapter listAdapter;
     ListView listView;
@@ -314,38 +316,57 @@ public class ManageListsActivity extends AppCompatActivity {
         }
     }
 
-    private void saveList(Token[] tokens, String listName) {
+    private void saveList(final Token[] tokens, final String listName) {
         try {
-            List list;
+            progressDialog = new MaterialDialog.Builder(this)
+                    .title(R.string.msg_importing_list)
+                    .content(R.string.msg_please_wait)
+                    .progress(true, 0)
+                    .build();
+            progressDialog.show();
 
-            TokenDatabase tokenDatabase = new TokenDatabase(this);
-            ListDatabase listDatabase = new ListDatabase(this);
-
-            if (listDatabase.getAmountOfLists() == 0) {
-                list = new List(listName, true, tokens.length);
-            } else {
-                list = new List(listName, false, tokens.length);
-                if (listDatabase.listExists(list)) {
-                    Toast.makeText(context, R.string.err_list_exsists, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-
-            tokenDatabase.addItems(tokens, listName);
-            listDatabase.addList(list);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.msg_success);
-            builder.setMessage(R.string.msg_successfully_imported_list);
-            builder.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
+            new Thread(new Runnable() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    startActivity(new Intent(context, BootActivity.class));
-                    finish();
+                public void run() {
+                    List list;
+
+                    TokenDatabase tokenDatabase = new TokenDatabase(getApplicationContext());
+                    ListDatabase listDatabase = new ListDatabase(getApplicationContext());
+
+                    if (listDatabase.getAmountOfLists() == 0) {
+                        list = new List(listName, true, tokens.length);
+                    } else {
+                        list = new List(listName, false, tokens.length);
+                        if (listDatabase.listExists(list)) {
+                            Toast.makeText(context, R.string.err_list_exsists, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
+                    tokenDatabase.addItems(tokens, listName);
+                    listDatabase.addList(list);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle(R.string.msg_success);
+                            builder.setMessage(R.string.msg_successfully_imported_list);
+                            builder.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(context, BootActivity.class));
+                                    finish();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            progressDialog.dismiss();
+                        }
+                    });
                 }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            }).start();
+
         } catch (Exception e) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.err_oops);

@@ -99,4 +99,6 @@
     <string name="use_password">Gebruik wachtwoord</string>
     <string name="password_description">Voer uw wachtwoord in</string>
     <string name="password_not_recognised">Incorrect wachtwoord</string>
+    <string name="msg_importing_list">Lijst importeren...</string>
+    <string name="msg_please_wait">Een ogenblik geduld</string>
 </resources>
