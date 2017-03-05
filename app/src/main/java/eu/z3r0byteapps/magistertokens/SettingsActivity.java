@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.mikepenz.aboutlibraries.LibsBuilder;
+import com.mikepenz.aboutlibraries.ui.LibsSupportFragment;
+
 import eu.z3r0byteapps.magistertokens.Util.NavigationDrawer;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -67,9 +70,11 @@ public class SettingsActivity extends AppCompatActivity {
                 case 0:
                     return new LicenseFragment();
                 case 1:
-                    //return new SecurityFragment();
+                    return new SecurityFragment();
                 case 2:
-                    //return new AboutFragment
+                    LibsSupportFragment libsFragment = new LibsBuilder()
+                            .supportFragment();
+                    return libsFragment;
                 default:
                     return new LicenseFragment();
             }

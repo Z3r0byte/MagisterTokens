@@ -51,7 +51,6 @@
     <string name="msg_help_title">Help Magister Tokens</string>
     <string name="msg_help_body"><![CDATA[In dit scherm kun je je codelijsten bekijken, hieronder staan de dingen die je kunt doen:<br/><br/><b>Blauwe knop (rechtsonder):</b> met deze knop kun je lijsten toevoegen.<br/><br/><b>Kort op een lijst klikken:</b> als je dit doet, wordt de lijst als favoriet ingesteld, dit wil zeggen dat de app met die lijst opstart.<br/><br/><b>Lang drukken op een lijst:</b> door lang te klikken kun je de lijst verwijderen, geen zorgen, er wordt eerst gevraagd of je het zeker weet voordat er iets wordt verijderd.<br/><br/>Nog vragen? Stuur even een mailtje naar z3r0byte.apps@gmail.com]]></string>
     <string name="title_activity_settings">Instellingen</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="msg_settings">Instellingen</string>
 
     <string name="msg_license">Licentie</string>
@@ -59,4 +58,45 @@
     <string name="msg_about">Over</string>
     <string name="status">Status:</string>
     <string name="trial_days_left">Trial: %1$d dagen over</string>
+    <string name="err_license_invalid">Trial is verlopen!</string>
+
+
+    <string name="aboutLibraries_description_showIcon">true</string>
+    <string name="aboutLibraries_description_showVersion">true</string>
+    <string name="aboutLibraries_description_text">Een makkelijke, snelle en veilige manier om je toegangscodes van Magister op te slaan.</string>
+
+
+    <string name="vingerafdruk_vereisen">Vingerafdruk vereisen</string>
+    <string name="msg_require_password">Wachtwoord vereisen</string>
+    <string name="msg_security_information">Informatie over veiligheidsmaatregelingen</string>
+    <string name="msg_change_password">Wachtwoord veranderen</string>
+    <string name="err_set_pwd_first">Stel eerst een wachtwoord in</string>
+    <string name="err_register_fingerprints_first">Registreer eerst vingerafdrukken</string>
+    <string name="msg_fix">Fix</string>
+    <string name="msg_touch_fingerprintsensor">Raak de vingerafdruksensor aan om door te gaan</string>
+    <string name="msg_fingerprint_recognised">Vingerafdruk herkend</string>
+    <string name="err_fingerprint_not_recognised">Vingerafdruk niet herkend</string>
+    <string name="err_error_format">Fout: %1$s</string>
+    <string name="msg_enter_password">Voer uw wachtwoord in</string>
+    <string name="msg_enter_password_to_continue">Voer uw wachtwoord in om door te gaan</string>
+    <string name="hint_password">Wachtwoord</string>
+    <string name="err_passwords_do_not_match">Wachtwoorden komen niet overeen</string>
+    <string name="msg_password_set">Wachtwoord ingesteld</string>
+    <string name="msg_enter_a_password">Voer een wachtwoord in</string>
+    <string name="msg_remember_your_password">Onthoud dit goed! Zonder wachtwoord hebt u geen toegang tot uw codes!</string>
+    <string name="msg_reenter_your_password">Voer uw wachtwoord nogmaals in</string>
+    <string name="msg_enter_password_again_to_confirm">Voer uw wachtwoord nogmaals in om het te bevestigen.</string>
+    <string name="err_password_incorrect">Wachtwoord onjuist</string>
+    <string name="msg_security_info_head">Veiligheidsinformatie</string>
+    <string name="msg_security_info_body"><![CDATA[Magister Tokens heeft een aantal veiligheidsfuncties, hieronder kunt u daar meer over lezen: <br/><br/><b>Geen backups toegestaan</b><br/>Magister Tokens verbiedt door middel van zijn manifest dat er backups gemaakt kunnen worden van de app-data. Hierdoor voorkomt de app dat de codes met een pc uit de telefoon gehaald kunnen worden.<br/><br/><b>Inlogverificatie</b><br/>In deze app kunt u er voor kiezen om de app te beveiligen met een wachtwoord en/of vingerafdruk. Meer informatie over beide methodes vindt u hieronder.<br/><br/><b>Wachtwoord wordt versleuteld</b><br/>Magister Tokens slaat uw wachtwoord niet als tekst op. Voordat het wachtwoord wordt opgeslagen wordt er namelijk een zogenoemde hash van gemaakt met het sterke SHA-256 algoritme. Hierdoor voorkomt de app dat zelfs als kwaadwilligen het voor elkaar krijgen uw wachtwoord uit de app-data te halen, ze niet weten wat uw wachtwoord is.<br/><br/><b>Vingerafdruk</b><br/>Magister Tokens gebruikt voor vingerafdruk verificatie de ingebouwde Android-functies. Hierdoor kan de app de vingerafdruk zelf niet lezen en hoeft hij deze dus ook niet op te slaan, dit voorkomt het risico dat uw vingerafdruk gestolen wordt uit de app.<br/><br/><b>Let op:</b><br/>Indien u uw toestel geroot heeft is de veiligheid van uw codes niet te garanderen!<br/><br/>Voor verdere vragen kunt u een mail sturen naar z3r0byte.apps@gmail.com]]></string>
+
+    <string name="sign_in">Inloggen</string>
+
+    <string name="fingerprint_description">Bevestig vingerafdruk om door te gaan</string>
+    <string name="fingerprint_hint">Raak sensor aan</string>
+    <string name="fingerprint_not_recognized">Vingerafdruk niet herkend</string>
+    <string name="fingerprint_success">Vingerafdruk herkend</string>
+    <string name="use_password">Gebruik wachtwoord</string>
+    <string name="password_description">Voer uw wachtwoord in</string>
+    <string name="password_not_recognised">Incorrect wachtwoord</string>
 </resources>

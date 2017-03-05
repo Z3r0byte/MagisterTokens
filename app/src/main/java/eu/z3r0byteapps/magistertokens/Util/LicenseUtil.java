@@ -3,9 +3,11 @@ package eu.z3r0byteapps.magistertokens.Util;
 import android.content.Context;
 import android.os.HandlerThread;
 import android.provider.Settings;
-import android.util.Log;
+
+import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 import eu.z3r0byteapps.magistertokens.Container.License;
@@ -15,78 +17,55 @@ import eu.z3r0byteapps.magistertokens.Container.License;
  */
 
 public class LicenseUtil {
-    private static final String TAG = "LicenseUtil";
 
-    public static License getLicense(Context context) {
-
-        Log.d(TAG, "getLicense: Unique Id: " + getUniqueId(context));
-        Log.d(TAG, "getLicense: Trial started: " + isTrialStarted(context));
-        ConfigUtil configUtil = new ConfigUtil(context);
-
-        if (configUtil.getInteger("daysLeft", 99) == 99) {
-            try {
-                startTrial();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public static License getLicense(final Context context) {
+        if (hasPurchased(context)) {
+            return new License(false, true, DateUtils.formatDate(new Date(), "yyyy-MM-dd HH:mm"));
         }
 
-        return null;
-        /*String licenseStr;
         try {
-            licenseStr = HttpUtil.convertInputStreamReaderToString(
-                    HttpUtil.httpGet("https://api.z3r0byteapps.eu/license/magistertokens/check.php?id=" + getUniqueId(context)));
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        */
-
-    }
-
-    public static void startTrial() throws IOException {
-
-    }
-
-    public static Boolean isTrialStarted(final Context context) {
-        ConfigUtil configUtil = new ConfigUtil(context);
-        if (configUtil.getBoolean("trialStarted", false)) {
-            return true;
-        } else {
-            try {
-                final CountDownLatch latch = new CountDownLatch(1);
-                final Boolean[] isStarted = new Boolean[1];
-                Thread uiThread = new HandlerThread("TrialHandler") {
-                    @Override
-                    public void run() {
-                        try {
-                            String response = HttpUtil.convertInputStreamReaderToString(
-                                    HttpUtil.httpGet("https://api.z3r0byteapps.eu/license/magistertokens/trialstarted.php?id="
-                                            + getUniqueId(context)));
-                            if (response.contains("true")) {
-                                isStarted[0] = true;
-                            } else {
-                                isStarted[0] = false;
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            isStarted[0] = false;
+            final CountDownLatch latch = new CountDownLatch(1);
+            final License[] license = new License[1];
+            Thread uiThread = new HandlerThread("TrialHandler") {
+                @Override
+                public void run() {
+                    try {
+                        String response = HttpUtil.convertInputStreamReaderToString(
+                                HttpUtil.httpGet("https://api.z3r0byteapps.eu/license/magistertokens/license.php?id="
+                                        + getUniqueId(context)));
+                        if (response.contains("error")) {
+                            license[0] = new License(true, false, DateUtils.formatDate(
+                                    new Date(), "yyyy-MM-dd HH:mm"));
+                        } else {
+                            license[0] = new Gson().fromJson(response, License.class);
                         }
-                        latch.countDown();
-                    }
-                };
-                uiThread.start();
-                latch.await();
-                return isStarted[0];
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                return false;
-            }
 
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        license[0] = new License(true, true, DateUtils.formatDate(
+                                DateUtils.addHours(new Date(), 24), "yyyy-MM-dd HH:mm"));
+                    }
+                    latch.countDown();
+                }
+            };
+            uiThread.start();
+            latch.await();
+            return license[0];
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return new License(true, true, DateUtils.formatDate(
+                    DateUtils.addHours(new Date(), 24), "yyyy-MM-dd HH:mm"));
         }
+
     }
 
 
     private static String getUniqueId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    private static Boolean hasPurchased(Context context) {
+        ConfigUtil configUtil = new ConfigUtil(context);
+        return !configUtil.getBoolean("isTrial", true);
     }
 }

@@ -153,7 +153,6 @@ public class ManageListsActivity extends AppCompatActivity {
         });
         updateLists();
 
-
     }
 
     private void removeList(final List list) {

@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="eu.z3r0byteapps.magistertokens.SecurityFragment">
+
+    <Switch
+        android:textSize="18sp"
+        android:text="@string/vingerafdruk_vereisen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="27dp"
+        android:id="@+id/enableFingerprint"
+        android:switchPadding="12dp" />
+
+    <Switch
+        android:layout_below="@+id/enableFingerprint"
+        android:textSize="18sp"
+        android:text="@string/msg_require_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="27dp"
+        android:id="@+id/enablePassword"
+        android:switchPadding="12dp" />
+
+    <TextView
+        android:enabled="true"
+        android:layout_below="@+id/enablePassword"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/msg_change_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="21dp"
+        android:clickable="true"
+        android:id="@+id/changePassword"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:textSize="18sp" />
+
+    <TextView
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_security_information"
+        android:id="@+id/securityInfo"
+        android:layout_alignParentBottom="true"
+        android:textAlignment="center"
+        android:textStyle="normal|italic"
+        android:clickable="true" />
+</RelativeLayout>
