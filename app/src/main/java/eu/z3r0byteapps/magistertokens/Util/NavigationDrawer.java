@@ -74,7 +74,7 @@ public class NavigationDrawer {
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
                         new ProfileDrawerItem().withName(activity.getString(R.string.msg_app_title)).withEmail(license)
-                                .withIcon(R.drawable.logo)
+                                .withIcon(R.drawable.logo_navbar)
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
