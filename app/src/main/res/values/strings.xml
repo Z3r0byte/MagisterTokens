@@ -101,4 +101,7 @@
     <string name="password_not_recognised">Incorrect wachtwoord</string>
     <string name="msg_importing_list">Lijst importeren...</string>
     <string name="msg_please_wait">Een ogenblik geduld</string>
+    <string name="msg_info_licenses">Informatie over licenties</string>
+    <string name="msg_buy_license">Koop een licentie</string>
+    <string name="msg_refresh_license">Ververs licentie</string>
 </resources>

@@ -34,4 +34,36 @@
         android:layout_centerHorizontal="true"
         android:max="14"
         android:progress="12" />
+
+    <TextView
+        android:text="@string/msg_info_licenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp"
+        android:id="@+id/info_licenses" />
+
+    <TextView
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_buy_license"
+        android:textAllCaps="true"
+        android:textColor="@color/primary"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/buy_license" />
+
+    <TextView
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_refresh_license"
+        android:textAllCaps="true"
+        android:textColor="@color/primary"
+        android:layout_below="@id/buy_license"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/refresh_license" />
+
 </RelativeLayout>
