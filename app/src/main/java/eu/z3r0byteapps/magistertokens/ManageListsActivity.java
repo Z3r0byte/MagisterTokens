@@ -178,6 +178,7 @@ public class ManageListsActivity extends AppCompatActivity {
 
     private void loadFile(Uri uri) {
         InputStreamReader inputStreamreader;
+
         try {
             inputStreamreader = new InputStreamReader(getContentResolver().openInputStream(uri));
         } catch (FileNotFoundException e) {
@@ -196,88 +197,37 @@ public class ManageListsActivity extends AppCompatActivity {
 
         String occuredErrors = "";
         ArrayList<Token> tokens = new ArrayList<>();
-        if (true) {//list.exists()) {
-            try {
-                BufferedReader br = new BufferedReader(inputStreamreader);
-                String line;
+        try {
+            BufferedReader br = new BufferedReader(inputStreamreader);
+            String line;
 
-                while ((line = br.readLine()) != null) {
-                    try {
-                        int endIndex;
-                        if (line.contains(";")) {
-                            endIndex = line.indexOf(";");
-                        } else if (line.contains(",")) {
-                            endIndex = line.indexOf(",");
-                        } else if (line.contains(":")) {
-                            endIndex = line.indexOf(":");
-                        } else {
-                            throw new UnsupportedEncodingException("Niet het juiste scheidingsteken!");
-                        }
-                        String idStr = line.substring(0, endIndex);
-                        String tokenStr = line.substring(endIndex + 1, line.length());
-
-                        Token token = new Token(Integer.parseInt(idStr), tokenStr);
-                        tokens.add(token);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        occuredErrors = occuredErrors + line + "\n";
+            while ((line = br.readLine()) != null) {
+                try {
+                    int endIndex;
+                    if (line.contains(";")) {
+                        endIndex = line.indexOf(";");
+                    } else if (line.contains(",")) {
+                        endIndex = line.indexOf(",");
+                    } else if (line.contains(":")) {
+                        endIndex = line.indexOf(":");
+                    } else {
+                        throw new UnsupportedEncodingException("Niet het juiste scheidingsteken!");
                     }
+                    String idStr = line.substring(0, endIndex);
+                    String tokenStr = line.substring(endIndex + 1, line.length());
+
+                    Token token = new Token(Integer.parseInt(idStr), tokenStr);
+                    tokens.add(token);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    occuredErrors = occuredErrors + line + "\n";
                 }
-                br.close();
-            } catch (IOException e) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(R.string.err_oops);
-                builder.setMessage(R.string.err_something_went_wrong + e.getMessage().toString());
-                builder.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                e.printStackTrace();
-                return;
             }
-            if (occuredErrors != "") {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(R.string.err_oops);
-                builder.setMessage(getString(R.string.err_unable_to_read_lines) + occuredErrors);
-                builder.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            } else {
-                Token[] tokensArray = new Token[tokens.size()];
-                tokensArray = tokens.toArray(tokensArray);
-                final Token[] tokensArrayFinal = tokensArray;
-
-                AlertDialog.Builder insertName = new AlertDialog.Builder(context);
-                insertName.setTitle(R.string.msg_insert_name);
-                insertName.setMessage(R.string.msg_insert_name_for_list);
-                final EditText input = new EditText(this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                insertName.setView(input);
-                insertName.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveList(tokensArrayFinal, input.getText().toString());
-                    }
-                });
-                insertName.setNegativeButton(R.string.msg_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                insertName.show();
-            }
-        } else {
+            br.close();
+        } catch (IOException e) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.err_oops);
-            builder.setMessage(R.string.err_retrieving_file);
+            builder.setMessage(R.string.err_something_went_wrong + e.getMessage().toString());
             builder.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -285,6 +235,44 @@ public class ManageListsActivity extends AppCompatActivity {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+            e.printStackTrace();
+            return;
+        }
+        if (occuredErrors != "") {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.err_oops);
+            builder.setMessage(getString(R.string.err_unable_to_read_lines) + occuredErrors);
+            builder.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            Token[] tokensArray = new Token[tokens.size()];
+            tokensArray = tokens.toArray(tokensArray);
+            final Token[] tokensArrayFinal = tokensArray;
+
+            AlertDialog.Builder insertName = new AlertDialog.Builder(context);
+            insertName.setTitle(R.string.msg_insert_name);
+            insertName.setMessage(R.string.msg_insert_name_for_list);
+            final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            insertName.setView(input);
+            insertName.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    saveList(tokensArrayFinal, input.getText().toString());
+                }
+            });
+            insertName.setNegativeButton(R.string.msg_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            insertName.show();
         }
     }
 
