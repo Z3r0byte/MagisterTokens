@@ -89,7 +89,7 @@ public class BootActivity extends AppCompatActivity implements FingerprintDialog
         }
 
         if (!configUtil.getBoolean("isValid", false)) {
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, LicenseActivity.class));
             Toast.makeText(this, getString(R.string.err_license_invalid), Toast.LENGTH_SHORT).show();
             finish();
         } else {

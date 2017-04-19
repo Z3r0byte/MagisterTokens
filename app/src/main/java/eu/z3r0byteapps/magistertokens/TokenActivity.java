@@ -14,8 +14,12 @@ import android.widget.RelativeLayout;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
+import java.util.Date;
+
 import eu.z3r0byteapps.magistertokens.Adapters.TokenListAdapter;
 import eu.z3r0byteapps.magistertokens.Container.Token;
+import eu.z3r0byteapps.magistertokens.Util.ConfigUtil;
+import eu.z3r0byteapps.magistertokens.Util.DateUtils;
 import eu.z3r0byteapps.magistertokens.Util.NavigationDrawer;
 import eu.z3r0byteapps.magistertokens.Util.TokenDatabase;
 
@@ -81,7 +85,11 @@ public class TokenActivity extends AppCompatActivity {
 
         noResultsLayout = (RelativeLayout) findViewById(R.id.no_results_layout);
 
-        NavigationDrawer navigationDrawer = new NavigationDrawer(this, toolbar, false, 0, listName);
+        ConfigUtil configUtil = new ConfigUtil(this);
+        Boolean isTrial = configUtil.getBoolean("isTrial", true);
+        Date endDate = DateUtils.parseDate(configUtil.getString("endDate", "2000-10-10 12:00"), "yyyy-MM-dd HH:mm");
+        Integer daysLeft = DateUtils.diffDays(endDate, new Date());
+        NavigationDrawer navigationDrawer = new NavigationDrawer(this, toolbar, isTrial, daysLeft, listName);
         navigationDrawer.setupNavigationDrawer();
     }
 

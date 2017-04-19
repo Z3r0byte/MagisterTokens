@@ -49,7 +49,7 @@
     <string name="msg_delete_list_body">Weet je zeker dat je de lijst %1$s wilt verwijderen?</string>
     <string name="menu_help">Help</string>
     <string name="msg_help_title">Help Magister Tokens</string>
-    <string name="msg_help_body"><![CDATA[In dit scherm kun je je codelijsten bekijken, hieronder staan de dingen die je kunt doen:<br/><br/><b>Blauwe knop (rechtsonder):</b> met deze knop kun je lijsten toevoegen.<br/><br/><b>Kort op een lijst klikken:</b> als je dit doet, wordt de lijst als favoriet ingesteld, dit wil zeggen dat de app met die lijst opstart.<br/><br/><b>Lang drukken op een lijst:</b> door lang te klikken kun je de lijst verwijderen, geen zorgen, er wordt eerst gevraagd of je het zeker weet voordat er iets wordt verijderd.<br/><br/>Nog vragen? Stuur even een mailtje naar z3r0byte.apps@gmail.com]]></string>
+    <string name="msg_help_body"><![CDATA[In dit scherm kun je je codelijsten bekijken, hieronder staan de dingen die je kunt doen:<br/><br/><b>Plus-knop (rechtsboven):</b> met deze knop kun je lijsten toevoegen.<br/><br/><b>Kort op een lijst klikken:</b> als je dit doet, wordt de lijst als favoriet ingesteld, dit wil zeggen dat de app met die lijst opstart.<br/><br/><b>Lang drukken op een lijst:</b> door lang te klikken kun je de lijst verwijderen, geen zorgen, er wordt eerst gevraagd of je het zeker weet voordat er iets wordt verijderd.<br/><br/>Nog vragen? Stuur even een mailtje naar z3r0byte.apps@gmail.com]]></string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="msg_settings">Instellingen</string>
 
@@ -104,4 +104,10 @@
     <string name="msg_info_licenses">Informatie over licenties</string>
     <string name="msg_buy_license">Koop een licentie</string>
     <string name="msg_refresh_license">Ververs licentie</string>
+    <string name="lijst_toevoegen">Lijst toevoegen</string>
+    <string name="msg_loading_purchases">Aankopen laden</string>
+    <string name="err_unknown">Onbekende fout</string>
+    <string name="err_no_connection">Geen verbinding</string>
+    <string name="title_license_info">Informatie over licenties</string>
+    <string name="body_license_info"><![CDATA[<b>Proefperiode</b><br/>De eerste keer dat u de app opstart wordt een proefperiode van 14 dagen gestart. Deze proefperiode is gekoppeld aan uw toestel.<br/><br/><b>Premium versie</b><br/>U kunt er voor kiezen om de volledige versie te kopen, zodat u na de proefperiode de app ook nog kunt gebruiken. De aankoop wordt gekoppeld aan uw google-account, dus als u de app verwijdert en opnieuw installeert, hebt u nog steeds beschikking tot alle functies.]]></string>
 </resources>

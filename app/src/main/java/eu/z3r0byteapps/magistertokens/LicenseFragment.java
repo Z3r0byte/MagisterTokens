@@ -1,19 +1,12 @@
 package eu.z3r0byteapps.magistertokens;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.android.vending.billing.IInAppBillingService;
 
 import java.util.Date;
 
@@ -28,24 +21,15 @@ public class LicenseFragment extends Fragment {
     TextView refreshLicense;
     TextView infoLicense;
 
+
+    final static String SKU_FULL_LICENSE = "pro_license";
+
+
+
     public LicenseFragment() {
         // Required empty public constructor
     }
 
-    IInAppBillingService mService;
-
-    ServiceConnection mServiceConn = new ServiceConnection() {
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mService = null;
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name,
-                                       IBinder service) {
-            mService = IInAppBillingService.Stub.asInterface(service);
-        }
-    };
 
 
     @Override
@@ -77,20 +61,49 @@ public class LicenseFragment extends Fragment {
         infoLicense = (TextView) view.findViewById(R.id.info_licenses);
 
 
-        Intent serviceIntent =
-                new Intent("com.android.vending.billing.InAppBillingService.BIND");
-        serviceIntent.setPackage("com.android.vending");
-        getActivity().bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+        buyLicense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                purchase(SKU_FULL_LICENSE);
+            }
+        });
+
 
 
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mService != null) {
-            getActivity().unbindService(mServiceConn);
-        }
+    private void purchase(final String SKU) {
+        /*if (!boughtSKU.contains(SKU)) {
+            try {
+                Bundle buyIntentBundle = mService.getBuyIntent(3, getActivity().getPackageName(),
+                        SKU, "inapp", "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ");
+                PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
+                startIntentSenderForResult(pendingIntent.getIntentSender(),
+                        1001, new Intent(getActivity()), Integer.valueOf(0), Integer.valueOf(0),
+                        Integer.valueOf(0));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+            }
+        } else {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(getString(R.string.dialog_item_purchased_title));
+            alertDialogBuilder.setMessage(getString(R.string.dialog_item_purchased_desc));
+            alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    consumePurchase(SKU);
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }*/
     }
 }

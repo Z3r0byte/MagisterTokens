@@ -19,6 +19,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.util.ArrayList;
 
 import eu.z3r0byteapps.magistertokens.Container.List;
+import eu.z3r0byteapps.magistertokens.LicenseActivity;
 import eu.z3r0byteapps.magistertokens.ManageListsActivity;
 import eu.z3r0byteapps.magistertokens.R;
 import eu.z3r0byteapps.magistertokens.SettingsActivity;
@@ -55,6 +56,8 @@ public class NavigationDrawer {
 
     PrimaryDrawerItem manageListsItem = new PrimaryDrawerItem().withName(R.string.msg_manage_lists)
             .withIcon(GoogleMaterial.Icon.gmd_format_list_numbered);
+    PrimaryDrawerItem licenseItem = new PrimaryDrawerItem().withName(R.string.msg_license)
+            .withIcon(GoogleMaterial.Icon.gmd_lock_open);
     PrimaryDrawerItem settingsItem = new PrimaryDrawerItem().withName(R.string.msg_settings)
             .withIcon(GoogleMaterial.Icon.gmd_settings);
 
@@ -103,6 +106,8 @@ public class NavigationDrawer {
                             activity.startActivity(new Intent(activity, ManageListsActivity.class));
                         } else if (drawerItem == settingsItem) {
                             activity.startActivity(new Intent(activity, SettingsActivity.class));
+                        } else if (drawerItem == licenseItem) {
+                            activity.startActivity(new Intent(activity, LicenseActivity.class));
                         } else {
                             activity.startActivity(new Intent(activity, TokenActivity.class).putExtra("listName", Lists.get(position - 1).getName()));
                         }
@@ -116,7 +121,7 @@ public class NavigationDrawer {
             drawerBuilder.addDrawerItems(item);
         }
         drawerBuilder.addDrawerItems(new DividerDrawerItem());
-        drawerBuilder.addDrawerItems(manageListsItem, settingsItem);
+        drawerBuilder.addDrawerItems(manageListsItem, licenseItem, settingsItem);
         drawer = drawerBuilder.build();
     }
 
@@ -138,6 +143,8 @@ public class NavigationDrawer {
         if (selection == "manageLists") {
             return listItems.size() + 2;
         } else if (selection == "settings") {
+            return listItems.size() + 4;
+        } else if (selection == "license") {
             return listItems.size() + 3;
         } else {
             int i = 0;

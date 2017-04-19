@@ -20,11 +20,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -32,7 +30,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,16 +45,18 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import eu.z3r0byteapps.magistertokens.Adapters.ListAdapter;
 import eu.z3r0byteapps.magistertokens.Container.List;
 import eu.z3r0byteapps.magistertokens.Container.Token;
 import eu.z3r0byteapps.magistertokens.Util.ConfigUtil;
+import eu.z3r0byteapps.magistertokens.Util.DateUtils;
 import eu.z3r0byteapps.magistertokens.Util.ListDatabase;
 import eu.z3r0byteapps.magistertokens.Util.NavigationDrawer;
 import eu.z3r0byteapps.magistertokens.Util.TokenDatabase;
@@ -89,51 +88,14 @@ public class ManageListsActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.msg_manage_lists);
         setSupportActionBar(toolbar);
 
-        IconicsDrawable fabIcon = new IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_playlist_add)
-                .color(Color.WHITE)
-                .sizeDp(18);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setImageDrawable(fabIcon);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(R.string.msg_import_list);
-                builder.setMessage(R.string.msg_import_list_clarification);
-                builder.setPositiveButton(getString(R.string.btn_import_list), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (Build.VERSION.SDK_INT >= 23 &&
-                                ContextCompat.checkSelfPermission(ManageListsActivity.this,
-                                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                            ActivityCompat.requestPermissions(ManageListsActivity.this,
-                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    PERMISSION_READ_FILES);
-                        } else {
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.setType("*/*");
-                            startActivityForResult(intent, PICKFILE_REQUEST_CODE);
-                        }
-                    }
-                });
-                builder.setNegativeButton(getString(R.string.msg_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
 
         configUtil = new ConfigUtil(this);
         listDatabase = new ListDatabase(this);
 
-        NavigationDrawer navigationDrawer = new NavigationDrawer(this, toolbar, false, 0, "manageLists");
+        Boolean isTrial = configUtil.getBoolean("isTrial", true);
+        Date endDate = DateUtils.parseDate(configUtil.getString("endDate", "2000-10-10 12:00"), "yyyy-MM-dd HH:mm");
+        Integer daysLeft = DateUtils.diffDays(endDate, new Date());
+        NavigationDrawer navigationDrawer = new NavigationDrawer(this, toolbar, isTrial, daysLeft, "manageLists");
         navigationDrawer.setupNavigationDrawer();
 
         listView = (ListView) findViewById(R.id.listsListView);
@@ -214,19 +176,29 @@ public class ManageListsActivity extends AppCompatActivity {
         }
     }
 
-    private void loadFile(String uri) {
-        String path = uri.replace("/document/primary:", "");
-        path = path.replace("/document/home:", "Documents/");
-        Log.d(TAG, "loadFile: Path: " + path);
-        File sdcard = Environment.getExternalStorageDirectory();
-
-        File list = new File(sdcard, path);
+    private void loadFile(Uri uri) {
+        InputStreamReader inputStreamreader;
+        try {
+            inputStreamreader = new InputStreamReader(getContentResolver().openInputStream(uri));
+        } catch (FileNotFoundException e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.err_oops);
+            builder.setMessage(R.string.err_retrieving_file);
+            builder.setPositiveButton(R.string.msg_okay, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return;
+        }
 
         String occuredErrors = "";
         ArrayList<Token> tokens = new ArrayList<>();
-        if (list.exists()) {
+        if (true) {//list.exists()) {
             try {
-                BufferedReader br = new BufferedReader(new FileReader(list));
+                BufferedReader br = new BufferedReader(inputStreamreader);
                 String line;
 
                 while ((line = br.readLine()) != null) {
@@ -385,7 +357,7 @@ public class ManageListsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICKFILE_REQUEST_CODE && data != null) {
-            loadFile(data.getData().getPath());
+            loadFile(data.getData());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -418,6 +390,35 @@ public class ManageListsActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_help) {
             showHelp();
+            return true;
+        } else if (id == R.id.add_list) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.msg_import_list);
+            builder.setMessage(R.string.msg_import_list_clarification);
+            builder.setPositiveButton(getString(R.string.btn_import_list), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (Build.VERSION.SDK_INT >= 23 &&
+                            ContextCompat.checkSelfPermission(ManageListsActivity.this,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(ManageListsActivity.this,
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                PERMISSION_READ_FILES);
+                    } else {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("*/*");
+                        startActivityForResult(intent, PICKFILE_REQUEST_CODE);
+                    }
+                }
+            });
+            builder.setNegativeButton(getString(R.string.msg_cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -12,23 +12,15 @@ import android.support.v7.widget.Toolbar;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.ui.LibsSupportFragment;
 
+import java.util.Date;
+
+import eu.z3r0byteapps.magistertokens.Util.ConfigUtil;
+import eu.z3r0byteapps.magistertokens.Util.DateUtils;
 import eu.z3r0byteapps.magistertokens.Util.NavigationDrawer;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
@@ -49,7 +41,11 @@ public class SettingsActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        NavigationDrawer navigationDrawer = new NavigationDrawer(this, toolbar, false, 0, "settings");
+        ConfigUtil configUtil = new ConfigUtil(this);
+        Boolean isTrial = configUtil.getBoolean("isTrial", true);
+        Date endDate = DateUtils.parseDate(configUtil.getString("endDate", "2000-10-10 12:00"), "yyyy-MM-dd HH:mm");
+        Integer daysLeft = DateUtils.diffDays(endDate, new Date());
+        NavigationDrawer navigationDrawer = new NavigationDrawer(this, toolbar, isTrial, daysLeft, "settings");
         navigationDrawer.setupNavigationDrawer();
     }
 
@@ -68,10 +64,8 @@ public class SettingsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new LicenseFragment();
-                case 1:
                     return new SecurityFragment();
-                case 2:
+                case 1:
                     LibsSupportFragment libsFragment = new LibsBuilder()
                             .supportFragment();
                     return libsFragment;
@@ -82,17 +76,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.msg_license);
-                case 1:
                     return getString(R.string.msg_security);
-                case 2:
+                case 1:
                     return getString(R.string.msg_about);
             }
             return null;
