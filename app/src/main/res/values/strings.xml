@@ -31,7 +31,7 @@
     <string name="msg_insert_name_for_list">Voer een naam voor deze lijst in:</string>
     <string name="err_list_exsists">Er bestaat al een lijst met deze naam.</string>
     <string name="err_something_went_wrong">Er ging iets mis: \n</string>
-    <string name="msg_successfully_imported_list">Lijst succesvol geïmporteerd.</string>
+    <string name="msg_successfully_imported_list">Lijst succesvol geïmporteerd. Aanbevolen wordt het bestand nu te verwijderen van uw telefoon, zodat andere mensen hier niet bij kunnen.</string>
     <string name="msg_allow_read_storage_please">Geef aub toestemming om de opslag te lezen.</string>
     <string name="title_activity_token">TokenActivity</string>
     <string name="action_settings">Settings</string>
