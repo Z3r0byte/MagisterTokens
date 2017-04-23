@@ -390,7 +390,7 @@ public class ManageListsActivity extends AppCompatActivity {
                             ContextCompat.checkSelfPermission(ManageListsActivity.this,
                                     Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                         ActivityCompat.requestPermissions(ManageListsActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                 PERMISSION_READ_FILES);
                     } else {
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
