@@ -1,5 +1,6 @@
 package eu.z3r0byteapps.magistertokens;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -91,6 +93,12 @@ public class TokenActivity extends AppCompatActivity {
         Integer daysLeft = DateUtils.diffDays(endDate, new Date());
         NavigationDrawer navigationDrawer = new NavigationDrawer(this, toolbar, isTrial, daysLeft, listName);
         navigationDrawer.setupNavigationDrawer();
+
+        if (!configUtil.getBoolean("isValid", false)) {
+            startActivity(new Intent(this, LicenseActivity.class));
+            Toast.makeText(this, getString(R.string.err_license_invalid), Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void updateTokens() {

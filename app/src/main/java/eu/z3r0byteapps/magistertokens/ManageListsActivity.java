@@ -117,6 +117,13 @@ public class ManageListsActivity extends AppCompatActivity {
         });
         updateLists();
 
+
+        if (!configUtil.getBoolean("isValid", false)) {
+            startActivity(new Intent(this, LicenseActivity.class));
+            Toast.makeText(this, getString(R.string.err_license_invalid), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
     }
 
     private void removeList(final List list) {
